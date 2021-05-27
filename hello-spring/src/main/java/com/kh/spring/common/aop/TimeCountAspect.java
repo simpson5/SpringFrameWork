@@ -26,7 +26,9 @@ public class TimeCountAspect {
 		Object returnObj = joinPoint.proceed();
 		
 		stopWatch.stop();
+		long milli = stopWatch.getTotalTimeMillis();
 		
+		log.debug("milli = {}", milli);
 		log.debug("stopWatch = {}",stopWatch.toString());
 		
 		return returnObj;
