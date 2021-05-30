@@ -40,11 +40,14 @@ $(()=> {
 				success: (data) => {
 					console.log(data);
 					const {boardList} = data;
-					const result = [];
-					$.each(boardList, function(index, board){
-						const arr = {"label" : board.title, "value" : board.no};
-						result.push(arr);
-					});
+					//map
+					const result = boardList.map((board) =>{
+						return {
+							"label" : board.title,
+							"value" : board.no
+						}
+					})
+					console.log(result);
 					response(result);
 				},
 				error: (xhr, statusText, err) => {
@@ -59,7 +62,9 @@ $(()=> {
 		},
 		focus: function(event, focused){
 			return false;
-		}
+		},
+		autoFocus: true,
+		minLength: 4
 	});
 });
 </script>
