@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="menu">
+	<select id="selectMenuList" resultMap="menuMap">
+		select
+			*
+		from
+			menu
+		order by
+			id desc
+	</select>
+	
+	<select id="selectMenuListByTypeAndTaste" resultMap="menuMap">
+		select
+			*
+		from
+			menu
+		<where>
+			<if test="'all' != type">
+				type = #{type}
+			</if>
+			<if test="'all' != taste">
+				and taste = #{taste}
+			</if>
+		</where>
+		order by
+			id desc
+	</select>
+	
+	<insert id="menuEnroll">
+		insert into menu 
+			(id,restaurant,name,price,type,taste) 
+		values
+			(seq_menu_id.nextval,#{restaurant},#{name},${price},#{type},#{taste})
+	</insert>
+	
+	<select id="selectMenuId" resultMap="menuMap">
+		select
+			*
+		from
+			menu
+		where
+			id = #{id}	
+	</select>
+	
+	<update id="menuUpdate">
+		update
+			menu
+		set
+			restaurant = #{restaurant},
+			name = #{name},
+			price = ${price},
+			type = #{type},
+			taste = #{taste}
+		where
+			id = #{id}	
+	</update>
+	
+	<resultMap type="menu" id="menuMap">
+		<result column="type" property="type" typeHandler="menuTypeHandler" />
+	</resultMap>
+</mapper>
